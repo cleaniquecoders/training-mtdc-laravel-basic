@@ -37,7 +37,6 @@ class TeamController extends Controller
      */
     public function show(string $id, $status): Response
     {
-
     }
 
     /**

@@ -18,7 +18,7 @@ class PostFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence,
-            'content' => join('', $this->faker->paragraphs(10)),
+            'content' => implode('', $this->faker->paragraphs(10)),
         ];
     }
 }

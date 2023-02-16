@@ -77,7 +77,6 @@ class UserController extends Controller
      */
     public function edit(User $user): Response
     {
-
         return response()->view('users.edit', compact('user'));
     }
 

@@ -7,8 +7,8 @@ namespace Database\Seeders;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         $admin = User::factory()
             ->withPersonalTeam()
             ->create([
-                'email' => 'admin@app.com'
+                'email' => 'admin@app.com',
             ]);
 
         $admin->assignRole('superadmin');
@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
     private function seedPermissions()
     {
         $permissions = [
-            'create user', 'update user', 'view user', 'delete user'
+            'create user', 'update user', 'view user', 'delete user',
         ];
 
         $roles = [
@@ -55,10 +55,9 @@ class DatabaseSeeder extends Seeder
                 'name' => $role,
             ]);
 
-            foreach($permissions as $permission) {
+            foreach ($permissions as $permission) {
                 $role->givePermissionTo($permission);
             }
         }
-
     }
 }
