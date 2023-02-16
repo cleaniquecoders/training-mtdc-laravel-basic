@@ -42,9 +42,18 @@
                             @endcan
 
                             @can('delete', $user)
-                                <a href="{{ route('users.destroy', $user) }}">
-                                    Delete
-                                </a>
+                                <form method="POST" action="{{ route('users.destroy', $user) }}" x-data>
+                                    @csrf @method('DELETE')
+
+                                    <a href="{{ route('users.destroy', $user) }}"
+                                             @click.prevent="
+                                                if(confirm('{{ __('Are sure want to delete this record?') }}')) {
+                                                    $root.submit();
+                                                }
+                                             ">
+                                        @lang('Delete')
+                                    </a>
+                                </form>
                             @endcan
                         </td>
                     </tr>

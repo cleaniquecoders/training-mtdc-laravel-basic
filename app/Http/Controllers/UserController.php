@@ -85,6 +85,16 @@ class UserController extends Controller
      */
     public function destroy(User $user): RedirectResponse
     {
-        //
+        // delete the user
+        $user->delete();
+
+        // set session message
+        session()->flash(
+            'message',
+            __('You have successfully delete a user.')
+        );
+
+        // redirect to user listing
+        return redirect()->route('users.index');
     }
 }
