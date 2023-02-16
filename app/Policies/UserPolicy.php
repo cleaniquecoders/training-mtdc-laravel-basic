@@ -20,7 +20,7 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-        return $user->can('view user');
+        return $user->can('view user') || $user->id == $model->id;
     }
 
     /**

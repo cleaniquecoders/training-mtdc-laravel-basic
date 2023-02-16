@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -16,11 +19,19 @@ class DatabaseSeeder extends Seeder
     {
         $this->seedPermissions();
 
-        \App\Models\User::factory(1000)
+        $admin = User::factory()
+            ->withPersonalTeam()
+            ->create([
+                'email' => 'admin@app.com'
+            ]);
+
+        $admin->assignRole('superadmin');
+
+        User::factory(1000)
             ->withPersonalTeam()
             ->create();
 
-        \App\Models\Post::factory(1000)->create();
+        Post::factory(1000)->create();
     }
 
     private function seedPermissions()
@@ -30,7 +41,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         $roles = [
-            'superadmin', 'user',
+            'superadmin',
         ];
 
         foreach ($permissions as $permission) {
@@ -40,9 +51,13 @@ class DatabaseSeeder extends Seeder
         }
 
         foreach ($roles as $role) {
-            Role::create([
+            $role = Role::create([
                 'name' => $role,
             ]);
+
+            foreach($permissions as $permission) {
+                $role->givePermissionTo($permission);
+            }
         }
 
     }

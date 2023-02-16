@@ -12,13 +12,19 @@ use Laravel\Fortify\Rules\Password;
 class UserController extends Controller
 {
     /**
+     * Create the controller instance.
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(User::class, 'user');
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index(): Response
     {
-        $this->authorize('viewAny', User::class);
-
-        $users = User::paginate();
+        $users = User::orderBy('id', 'desc')->paginate();
 
         return response()->view('users.index', compact('users'));
     }
@@ -28,8 +34,6 @@ class UserController extends Controller
      */
     public function create(): Response
     {
-        $this->authorize('create');
-
         return response()->view('users.create');
     }
 
@@ -38,8 +42,6 @@ class UserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $this->authorize('create');
-
         // validate
         $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:128'],
@@ -67,8 +69,6 @@ class UserController extends Controller
      */
     public function show(User $user): Response
     {
-        $this->authorize('view');
-
         return response()->view('users.show', compact('user'));
     }
 
@@ -77,7 +77,6 @@ class UserController extends Controller
      */
     public function edit(User $user): Response
     {
-        $this->authorize('update');
 
         return response()->view('users.edit', compact('user'));
     }
@@ -87,7 +86,20 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user): RedirectResponse
     {
-        $this->authorize('update');
+        // validate
+        $request->validate([
+            'name' => ['required', 'string', 'min:3', 'max:128'],
+        ]);
+
+        $user->update($request->only('name'));
+
+        // set session message
+        session()->flash(
+            'message',
+            __('You have successfully update user.')
+        );
+
+        return redirect()->route('users.show', $user);
     }
 
     /**
@@ -95,8 +107,6 @@ class UserController extends Controller
      */
     public function destroy(User $user): RedirectResponse
     {
-        $this->authorize('delete');
-
         // delete the user
         $user->delete();
 
