@@ -32,6 +32,14 @@
                 </header>
             @endif
 
+            @if(session()->has('message'))
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 bg-green-200">
+                    <h2 class=" text-gray-800 leading-tight">
+                        {{ session('message') }}
+                    </h2>
+                </div>
+            @endif
+
             <!-- Page Content -->
             <main>
                 {{ $slot }}

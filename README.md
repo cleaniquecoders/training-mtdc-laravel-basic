@@ -89,3 +89,10 @@ public function getRouteKeyName()
 ```
 
 `uuid` field can be create automatically using `creating` event in boot up of the model. Reference [here](https://github.com/nasrulhazim/project-template/blob/master/app/Concerns/InteractsWithUuid.php)
+
+
+### Install DebugBar for Debugging Purpose
+
+```bash
+composer require barryvdh/laravel-debugbar --dev
+```

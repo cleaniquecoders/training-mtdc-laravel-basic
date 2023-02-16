@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Fortify\Rules\Password;
 
 class UserController extends Controller
 {
@@ -32,7 +34,26 @@ class UserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        //
+        // validate
+        $request->validate([
+            'name' => ['required', 'string', 'min:3', 'max:128'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', new Password, 'confirmed'],
+        ]);
+
+        // store
+        $data = $request->only('name', 'email', 'password');
+        $data['password'] = Hash::make($data['password']);
+        $user = User::create($data);
+
+        // set session message
+        session()->flash(
+            'message',
+            __('You have successfully add a new user.')
+        );
+
+        // redirect to user details.
+        return redirect()->route('users.show', $user);
     }
 
     /**
