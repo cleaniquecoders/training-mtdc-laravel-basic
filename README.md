@@ -121,3 +121,9 @@ class User extends Authenticatable
 }
 ```
 
+### Run Migration with Seeding
+
+```php
+php artisan migrate:fresh --seed
+```
+
