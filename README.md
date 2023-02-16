@@ -65,7 +65,6 @@ Then run Vite during development:
 npm run dev
 ```
 
-
 ### Change Route to use uuid instead of id
 
 Create a column called uuid:
@@ -90,16 +89,35 @@ public function getRouteKeyName()
 
 `uuid` field can be create automatically using `creating` event in boot up of the model. Reference [here](https://github.com/nasrulhazim/project-template/blob/master/app/Concerns/InteractsWithUuid.php)
 
-
 ### Install DebugBar for Debugging Purpose
 
 ```bash
 composer require barryvdh/laravel-debugbar --dev
 ```
 
-
 ### Security: Authorization
 
 ```bash
 php artisan make:policy UserPolicy --model=User
 ```
+
+### Package: Permission
+
+```bash
+composer require spatie/laravel-permission
+php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+php artisan migrate
+```
+
+Add `HasRoles` trait to `\App\Models\User` class:
+
+```php
+
+use Spatie\Permission\Traits\HasRoles;
+
+class User extends Authenticatable
+{
+    use HasRoles;
+}
+```
+
