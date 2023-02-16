@@ -96,3 +96,10 @@ public function getRouteKeyName()
 ```bash
 composer require barryvdh/laravel-debugbar --dev
 ```
+
+
+### Security: Authorization
+
+```bash
+php artisan make:policy UserPolicy --model=User
+```
