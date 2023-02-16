@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             ->create();
 
         $this->seedPermissions();
+
+        \App\Models\Post::factory(1000)->create();
     }
 
     private function seedPermissions()

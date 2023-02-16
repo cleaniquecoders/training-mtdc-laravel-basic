@@ -127,3 +127,11 @@ class User extends Authenticatable
 php artisan migrate:fresh --seed
 ```
 
+## Assignment
+
+Create CRUD for POST.
+
+```bash
+php artisan make:model Post -mf
+```
+
