@@ -14,11 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->seedPermissions();
+
         \App\Models\User::factory(1000)
             ->withPersonalTeam()
             ->create();
-
-        $this->seedPermissions();
 
         \App\Models\Post::factory(1000)->create();
     }
